@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import styles from "./Login.module.css";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
@@ -6,24 +6,32 @@ import { formActions } from "../../types";
 
 const emailReducer = (state, action) => {
   const { type, payload } = action;
-  if (type === formActions.input) {
-    return { value: payload, isValid: payload.includes("@") };
+
+  switch (type) {
+    case formActions.input:
+      return { value: payload, isValid: payload.includes("@") };
+
+    case formActions.blur:
+      return { value: state.value, isValid: state.value.includes("@") };
+
+    default:
+      return { value: "", isValid: false };
   }
-  if (type === formActions.blur) {
-    return { value: state.value, isValid: state.value.includes("@") };
-  }
-  return { value: "", isValid: false };
 };
 
 const passwordReducer = (state, action) => {
   const { type, payload } = action;
-  if (type === formActions.input) {
-    return { value: payload, isValid: payload.trim().length > 6 };
+
+  switch (type) {
+    case formActions.input:
+      return { value: payload, isValid: payload.trim().length > 6 };
+
+    case formActions.blur:
+      return { value: state.value, isValid: state.value.trim().length > 6 };
+
+    default:
+      return { value: "", isValid: false };
   }
-  if (type === formActions.blur) {
-    return { value: state.value, isValid: state.value.trim().length > 6 };
-  }
-  return { value: "", isValid: false };
 };
 
 const Login = (props) => {
@@ -41,15 +49,32 @@ const Login = (props) => {
     isValid: null,
   });
 
+  const { isValid: emailIsVallid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      setFormIsValid(emailIsVallid && passwordIsValid);
+    }, 500);
+
+    return () => {
+      clearTimeout(identifier);
+    };
+  }, [emailIsVallid, passwordIsValid]);
+
   const formInputHandler = (event) => {
     const { name, value } = event.target;
-    if (name === "email") {
-      dispatchEmail({ type: formActions.input, payload: value });
-      setFormIsValid(value.includes("@") && passwordState.isValid);
-    }
-    if (name === "password") {
-      dispatchPassword({ type: formActions.input, payload: value });
-      setFormIsValid(emailState.isValid && value.trim().length > 6);
+    switch (name) {
+      case "email":
+        dispatchEmail({ type: formActions.input, payload: value });
+        break;
+
+      case "password":
+        dispatchPassword({ type: formActions.input, payload: value });
+        break;
+
+      default:
+        return;
     }
   };
 
