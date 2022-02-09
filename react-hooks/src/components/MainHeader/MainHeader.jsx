@@ -3,11 +3,11 @@ import styles from "./MainHeader.module.css";
 import Navigation from "./Navigation";
 
 const MainHeader = (props) => {
-  const { isAuthenticated, onLogout } = props;
+  const { onLogout } = props;
   return (
     <header className={styles["main-header"]}>
       <h1>A Typical Page</h1>
-      <Navigation isLoggedIn={isAuthenticated} onLogout={onLogout} />
+      <Navigation onLogout={onLogout} />
     </header>
   );
 };

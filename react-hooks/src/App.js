@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MainHeader from "./components/MainHeader/MainHeader";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
+import AuthContext from "./store/auth-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,13 +25,17 @@ const App = () => {
   };
 
   return (
-    <Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={LogoutHandler} />
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+      }}
+    >
+      <MainHeader onLogout={LogoutHandler} />
       <main>
         {!isLoggedIn && <Login onLogin={LoginHandler} />}
         {isLoggedIn && <Home onLogout={LogoutHandler} />}
       </main>
-    </Fragment>
+    </AuthContext.Provider>
   );
 };
 
