@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useRef, useImperativeHandle } from "react";
 import styles from "./FormInput.module.css";
 
-const FormInput = (props) => {
+const FormInput = React.forwardRef((props, ref) => {
   const { label, value, isValid, name, type, onChange, onBlur } = props;
+
+  const inputRef = useRef();
+  const activate = () => {
+    inputRef.current.focus();
+  };
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus: activate,
+    };
+  });
 
   return (
     <div
-      className={`${styles.control} ${
-        isValid === false ? styles.invalid : ""
-      }`}
+      className={`${styles.control} ${isValid === false ? styles.invalid : ""}`}
     >
       <label htmlFor={name}>{label}</label>
       <input
@@ -18,9 +27,10 @@ const FormInput = (props) => {
         type={type}
         onChange={onChange}
         onBlur={onBlur}
+        ref={inputRef}
       />
     </div>
   );
-};
+});
 
 export default FormInput;
