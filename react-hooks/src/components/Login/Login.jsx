@@ -4,6 +4,7 @@ import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
 import { formActions } from "../../types";
 import AuthContext from "../../store/auth-context";
+import FormInput from "../UI/Input/FormInput";
 
 const emailReducer = (state, action) => {
   const { type, payload } = action;
@@ -96,37 +97,25 @@ const Login = () => {
   return (
     <Card className={styles.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${styles.control} ${
-            emailState.isValid === false ? styles.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={emailState.value}
-            onChange={formInputHandler}
-            onBlur={validateEmailHandler}
-          />
-        </div>
+        <FormInput
+          label="E-Mail"
+          name="email"
+          type="email"
+          value={emailState.value}
+          isValid={emailIsVallid}
+          onChange={formInputHandler}
+          onBlur={validateEmailHandler}
+        />
 
-        <div
-          className={`${styles.control} ${
-            passwordState.isValid === false ? styles.invalid : ""
-          }`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="text"
-            value={passwordState.value}
-            onChange={formInputHandler}
-            onBlur={validatePasswordHandler}
-          />
-        </div>
+        <FormInput
+          label="Password"
+          name="password"
+          type="password"
+          value={passwordState.value}
+          isValid={passwordIsValid}
+          onChange={formInputHandler}
+          onBlur={validatePasswordHandler}
+        />
 
         <div className={styles.actions}>
           <Button type="submit" className={styles.btn} disabled={!formIsValid}>
