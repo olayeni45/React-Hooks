@@ -5,12 +5,13 @@ import styles from "./DemoList.module.css";
 const DemoList = (props) => {
   const { title, items } = props;
 
-  const sortedList = items.sort((a, b) => a - b);
+  //const sortedList = items.sort((a, b) => a - b);
 
-  //   const sortedList = useMemo(() => {
-  //     console.log("Items sorted");
-  //     return items.sort((a, b) => a - b);
-  //   }, [items]);
+  const sortedList = useMemo(() => {
+    console.log("Items sorted");
+    return items.sort((a, b) => a - b);
+  }, [items]);
+
   console.log("DemoList RUNNING");
 
   return (

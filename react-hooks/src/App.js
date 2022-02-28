@@ -6,7 +6,27 @@ import DemoList from "./components/Demo/DemoList";
 const App = () => {
   const [listTitle, setListTitle] = useState("My List");
 
-  /*
+  const changeTitleHandler = useCallback(() => {
+    setListTitle("New Title");
+  }, []);
+
+  const listItems = useMemo(() => [100, 5, 3, 1, 10, 9], []);
+
+  console.log("APP RUNNING");
+
+  return (
+    <div className="app">
+      <DemoList title={listTitle} items={listItems} />
+      <Button onClick={changeTitleHandler}>Change List Title</Button>
+    </div>
+  );
+};
+
+export default App;
+
+/*
+useCallback allows us to store a function across components re-executions
+
   const [showParagraph, setShowParagraph] = useState(false);
 
   const [allowToggle, setAllowToggle] = useState(false);
@@ -21,27 +41,4 @@ const App = () => {
     setAllowToggle(true);
   };
 
-  */
-
-  const changeTitleHandler = useCallback(() => {
-    setListTitle("New Title");
-  }, []);
-
- // const listItems = useMemo(() => [5, 3, 1, 10, 9], []);
-
-  console.log("APP RUNNING");
-
-  return (
-    <div className="app">
-      <h1>Hi there!</h1>
-      <DemoList title={listTitle} items={[100, 5, 3, 1, 10, 9]} />
-      <Button onClick={changeTitleHandler}>Change List Title</Button>
-    </div>
-  );
-};
-
-export default App;
-
-/*
-useCallback allows us to store a function across components re-executions
 */
