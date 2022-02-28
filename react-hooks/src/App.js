@@ -1,28 +1,20 @@
-import React, { Fragment, useState } from "react";
-import MainHeader from "./components/MainHeader/MainHeader";
-import Login from "./components/Login/Login";
-import Home from "./components/Home/Home";
+import React, { useState } from "react";
+import "./App.css";
+import Button from "./components/UI/Button/Button";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showParagraph, setShowParagraph] = useState(false);
 
-  const LoginHandler = (email, password) => {
-    console.log({ email, password });
-    setIsLoggedIn(true);
-  };
-
-  const LogoutHandler = () => {
-    setIsLoggedIn(false);
+  const toggleParagraphHandler = () => {
+    setShowParagraph((prev) => !prev);
   };
 
   return (
-    <Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={LogoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={LoginHandler} />}
-        {isLoggedIn && <Home onLogout={LogoutHandler} />}
-      </main>
-    </Fragment>
+    <div className="app">
+      <h1>Hi there!</h1>
+      {showParagraph && <p>Hello there!</p>}
+      <Button onClick={toggleParagraphHandler}>Toggle Paragraph</Button>
+    </div>
   );
 };
 
