@@ -1,14 +1,14 @@
-import React, {Fragment} from 'react';
-import BackwardCounter from './components/BackwardCounter';
-import ForwardCounter from './components/ForwardCounter';
+import React, { Fragment } from "react";
+import BackwardCounter from "./components/BackwardCounter";
+import ForwardCounter from "./components/ForwardCounter";
 
-const App = ()=> {
+const App = () => {
   return (
     <Fragment>
       <ForwardCounter />
       <BackwardCounter />
     </Fragment>
   );
-}
+};
 
 export default App;
